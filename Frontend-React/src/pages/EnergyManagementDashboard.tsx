@@ -14,13 +14,13 @@ import ReportsPanel from "../components/ReportsPanel";
 import ConfigSection from "../components/ConfigSection";
 import BuildingBarChart from "../components/Charts/BuildingBarChart";
 import ConsumptionRadialChart from "../components/Charts/ConsumptionRadialChart";
+import Footer from "../components/Footer";
 
 export default function EnergyManagementDashboard() {
   return (
-    <div className="min-h-screen [background:radial-gradient(125%_125%_at_50%_10%,#000_40%,#63e_100%)]">
+    <div className="min-h-screen [background:radial-gradient(125%_125%_at_50%_10%,#000_40%,#63e_100%)] ">
       <Header />
-
-      <div className="max-w-7xl mx-auto px-4 py-6 grid grid-cols-1 xl:grid-cols-12 gap-6">
+      <div className="max-w-7xl mx-auto px-4 py-6 grid grid-cols-1 xl:grid-cols-12 gap-6 ">
         {/* Sidebar */}
         <aside className="xl:col-span-3 space-y-6">
           <OverviewCard />
@@ -61,6 +61,7 @@ export default function EnergyManagementDashboard() {
           <ConfigSection />
         </main>
       </div>
+      <Footer />
     </div>
   );
 }
