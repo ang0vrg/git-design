@@ -12,6 +12,8 @@ import BuildingPieChart from "../components/Charts/BuildingPieChart";
 import AlertsList from "../components/AlertsList";
 import ReportsPanel from "../components/ReportsPanel";
 import ConfigSection from "../components/ConfigSection";
+import BuildingBarChart from "../components/Charts/BuildingBarChart";
+import ConsumptionRadialChart from "../components/Charts/ConsumptionRadialChart";
 
 export default function EnergyManagementDashboard() {
   return (
@@ -47,6 +49,8 @@ export default function EnergyManagementDashboard() {
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             <EnergyLineChart />
             <BuildingPieChart />
+            <BuildingBarChart />
+            <ConsumptionRadialChart />
           </div>
 
           {/* Alerts and Reports */}
