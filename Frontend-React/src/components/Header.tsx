@@ -43,7 +43,7 @@ export default function Header() {
   };
 
   const navLinks = [
-    { label: "Dashboard", href: "/" },
+    { label: "Dashboard", href: "/dashboard" },
     { label: "Edificios", href: "/buildings" },
     { label: "Reportes", href: "/reports" },
     { label: "Alertas", href: "/alerts" },
@@ -72,7 +72,7 @@ export default function Header() {
           {/* Logo */}
           <div
             className="flex items-center space-x-3 cursor-pointer"
-            onClick={() => nav("/")}
+            onClick={() => nav("/dashboard")}
           >
             <img src="/icon.svg" alt="Logo" className="h-8 w-auto" />
             <span className="text-white font-semibold text-lg">EnergyIQ</span>

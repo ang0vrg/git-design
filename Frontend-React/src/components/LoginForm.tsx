@@ -56,7 +56,7 @@ const LoginForm: FC<LoginFormProps> = ({
         <button
           type="button"
           onClick={switchToForgotPassword}
-          className="text-sm text-green-400 hover:underline hover:text-green-300"
+          className="text-sm text-purple-400 hover:underline hover:text-purple-300"
         >
           ¿Olvidaste tu contraseña?
         </button>
@@ -66,11 +66,11 @@ const LoginForm: FC<LoginFormProps> = ({
       <button
         type="submit"
         disabled={loading}
-        className={`w-full flex items-center justify-center py-3 rounded-lg font-semibold text-white transition
+        className={`w-full flex items-center justify-center py-3 rounded-lg font-semibold text-white transition shadow-lg
           ${
             loading
               ? "bg-gray-500 cursor-not-allowed"
-              : "bg-green-600 hover:bg-green-500"
+              : "bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 shadow-purple-900/50"
           }`}
       >
         {loading ? (
@@ -103,12 +103,12 @@ const LoginForm: FC<LoginFormProps> = ({
       </button>
 
       {/* Registro */}
-      <p className="text-center text-sm text-white/80">
+      <p className="text-center text-sm text-gray-300">
         ¿No tienes cuenta?{" "}
         <button
           type="button"
           onClick={switchToRegister}
-          className="text-green-400 hover:underline hover:text-green-300"
+          className="text-purple-400 hover:underline hover:text-purple-300 font-semibold"
         >
           Regístrate aquí
         </button>

@@ -53,4 +53,87 @@ public class UserService {
                 .map(u -> new UserResponse(u.id.intValue(), u.username, u.email, u.role, u.phone))
                 .toList();
     }
+
+    /* GET PROFILE by email (from JWT) */
+    public org.acme.DTO.UserProfileResponse getProfileByEmail(String email) {
+        return repo.findByEmail(email)
+                .map(u -> new org.acme.DTO.UserProfileResponse(
+                        u.id.intValue(),
+                        u.username,
+                        u.email,
+                        u.role,
+                        u.phone,
+                        u.profileImageUrl,
+                        u.createdAt,
+                        u.updatedAt))
+                .orElseThrow(() -> new IllegalArgumentException("Usuario no encontrado"));
+    }
+
+    /* UPDATE PROFILE */
+    @Transactional
+    public org.acme.DTO.UserProfileResponse updateProfile(String email, org.acme.DTO.UserUpdateRequest request) {
+        User user = repo.findByEmail(email)
+                .orElseThrow(() -> new IllegalArgumentException("Usuario no encontrado"));
+
+        // Update fields if provided
+        if (request.getUsername() != null && !request.getUsername().isBlank()) {
+            user.username = request.getUsername();
+        }
+        if (request.getEmail() != null && !request.getEmail().isBlank() && !request.getEmail().equals(email)) {
+            if (repo.existsByEmail(request.getEmail())) {
+                throw new IllegalArgumentException("El email ya está en uso");
+            }
+            user.email = request.getEmail();
+        }
+        if (request.getPhone() != null) {
+            user.phone = request.getPhone();
+        }
+
+        // Update password if both current and new password are provided
+        if (request.getCurrentPassword() != null && request.getNewPassword() != null) {
+            if (!BCrypt.checkpw(request.getCurrentPassword(), user.passwordHash)) {
+                throw new IllegalArgumentException("Contraseña actual incorrecta");
+            }
+            user.passwordHash = BCrypt.hashpw(request.getNewPassword(), BCrypt.gensalt());
+        }
+
+        repo.persist(user);
+        return new org.acme.DTO.UserProfileResponse(
+                user.id.intValue(),
+                user.username,
+                user.email,
+                user.role,
+                user.phone,
+                user.profileImageUrl,
+                user.createdAt,
+                user.updatedAt);
+    }
+
+    /* UPDATE PROFILE IMAGE */
+    @Transactional
+    public org.acme.DTO.UserProfileResponse updateProfileImage(String email, String imageUrl) {
+        User user = repo.findByEmail(email)
+                .orElseThrow(() -> new IllegalArgumentException("Usuario no encontrado"));
+
+        user.profileImageUrl = imageUrl;
+        repo.persist(user);
+
+        return new org.acme.DTO.UserProfileResponse(
+                user.id.intValue(),
+                user.username,
+                user.email,
+                user.role,
+                user.phone,
+                user.profileImageUrl,
+                user.createdAt,
+                user.updatedAt);
+    }
+
+    /* DELETE ACCOUNT */
+    @Transactional
+    public void deleteAccount(String email) {
+        User user = repo.findByEmail(email)
+                .orElseThrow(() -> new IllegalArgumentException("Usuario no encontrado"));
+        repo.delete(user);
+    }
 }

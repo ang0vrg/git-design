@@ -25,6 +25,9 @@ public class User extends PanacheEntity {
     @Column(name = "phone")
     public String phone;
 
+    @Column(name = "profile_image_url")
+    public String profileImageUrl;
+
     @Column(name = "created_at")
     public LocalDateTime createdAt = LocalDateTime.now();
 

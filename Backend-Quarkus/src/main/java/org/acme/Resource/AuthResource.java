@@ -1,4 +1,3 @@
-// Backend-Quarkus\src\main\java\org\acme\Resource\AuthResource.java
 package org.acme.Resource;
 
 import org.acme.DTO.*;
@@ -46,7 +45,13 @@ public class AuthResource {
         user.passwordHash = dto.getPassword(); // se hashea en el servicio
         user.role = User.Role.CLIENT;
 
-        UserResponse res = service.create(user);
-        return Response.ok(Map.of("ok", true, "user", res)).build();
+        try {
+            UserResponse res = service.create(user);
+            return Response.ok(Map.of("ok", true, "user", res)).build();
+        } catch (IllegalArgumentException e) {
+            return Response.status(409)
+                    .entity(Map.of("ok", false, "msg", e.getMessage()))
+                    .build();
+        }
     }
 }
